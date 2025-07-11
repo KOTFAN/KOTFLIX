@@ -1,10 +1,10 @@
 import WatchedMovies from "./WatchedMovies";
-import FindMovies from "./FindMovies";
+import FoundMovies from "./FoundMovies";
 
 export default function Main({ tempWatchedData, movies }) {
   return (
     <main className="main">
-      <FindMovies movies={movies} />
+      <FoundMovies movies={movies} />
 
       <WatchedMovies tempWatchedData={tempWatchedData} />
     </main>
