@@ -4,7 +4,7 @@ export default function Movie({ children, movie }) {
     <li key={movie.imdbID}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
-      {children}
+      <div> {children}</div>
     </li>
   );
 }

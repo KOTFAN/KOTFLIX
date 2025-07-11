@@ -1,27 +1,21 @@
 import { useState } from "react";
 import MoviesList from "./MoviesList";
 import Movie from "./Movie";
+import ShowHideButton from "./ShowHideButton";
 
 export default function FoundMovies({ movies }) {
-  const [isOpen1, setIsOpen1] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
   return (
     <div className="box">
-      <button
-        className="btn-toggle"
-        onClick={() => setIsOpen1((open) => !open)}
-      >
-        {isOpen1 ? "–" : "+"}
-      </button>
-      {isOpen1 && (
+      <ShowHideButton isOpen={isOpen} setIsOpen={setIsOpen} />
+      {isOpen && (
         <MoviesList>
           {movies?.map((movie) => (
             <Movie movie={movie}>
-              <div>
-                <p>
-                  <span>🗓</span>
-                  <span>{movie.Year}</span>
-                </p>
-              </div>
+              <p>
+                <span>🗓</span>
+                <span>{movie.Year}</span>
+              </p>
             </Movie>
           ))}
         </MoviesList>

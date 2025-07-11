@@ -1,9 +1,10 @@
 import { useState } from "react";
 import MoviesList from "./MoviesList";
 import Movie from "./Movie";
+import ShowHideButton from "./ShowHideButton";
 
 export default function WatchedMovies({ tempWatchedData }) {
-  const [isOpen2, setIsOpen2] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
   const [watched, setWatched] = useState(tempWatchedData);
 
   const average = (arr) =>
@@ -15,13 +16,9 @@ export default function WatchedMovies({ tempWatchedData }) {
 
   return (
     <div className="box">
-      <button
-        className="btn-toggle"
-        onClick={() => setIsOpen2((open) => !open)}
-      >
-        {isOpen2 ? "–" : "+"}
-      </button>
-      {isOpen2 && (
+      <ShowHideButton isOpen={isOpen} setIsOpen={setIsOpen} />
+
+      {isOpen && (
         <>
           <div className="summary">
             <h2>Movies you watched</h2>
@@ -47,20 +44,18 @@ export default function WatchedMovies({ tempWatchedData }) {
           <MoviesList>
             {watched.map((movie) => (
               <Movie movie={movie}>
-                <div>
-                  <p>
-                    <span>⭐️</span>
-                    <span>{movie.imdbRating}</span>
-                  </p>
-                  <p>
-                    <span>🌟</span>
-                    <span>{movie.userRating}</span>
-                  </p>
-                  <p>
-                    <span>⏳</span>
-                    <span>{movie.runtime} min</span>
-                  </p>
-                </div>{" "}
+                <p>
+                  <span>⭐️</span>
+                  <span>{movie.imdbRating}</span>
+                </p>
+                <p>
+                  <span>🌟</span>
+                  <span>{movie.userRating}</span>
+                </p>
+                <p>
+                  <span>⏳</span>
+                  <span>{movie.runtime} min</span>
+                </p>
               </Movie>
             ))}
           </MoviesList>
