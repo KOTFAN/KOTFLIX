@@ -193,7 +193,7 @@
 .summary div {
   display: flex;
   align-items: center;
-  gap: 2.4rem;
+  gap: 2rem;
   font-size: 1.6rem;
   font-weight: 600;
 }

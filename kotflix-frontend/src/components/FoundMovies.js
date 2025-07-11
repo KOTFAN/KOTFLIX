@@ -11,7 +11,7 @@ export default function FoundMovies({ movies }) {
       {isOpen && (
         <MoviesList>
           {movies?.map((movie) => (
-            <Movie movie={movie}>
+            <Movie movie={movie} key={movie.imdbID}>
               <p>
                 <span>🗓</span>
                 <span>{movie.Year}</span>
