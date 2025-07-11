@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./App.css";
 
 const tempMovieData = [
   {
@@ -66,7 +67,7 @@ export default function App() {
       <nav className="nav-bar">
         <div className="logo">
           <span role="img">🍿</span>
-          <h1>usePopcorn</h1>
+          <h1>KOTFLIX</h1>
         </div>
         <input
           className="search"
