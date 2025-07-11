@@ -1,4 +1,5 @@
 import { useState } from "react";
+import MoviesList from "./MoviesList";
 
 export default function FindMovies({ movies }) {
   const [isOpen1, setIsOpen1] = useState(true);
@@ -11,7 +12,7 @@ export default function FindMovies({ movies }) {
         {isOpen1 ? "–" : "+"}
       </button>
       {isOpen1 && (
-        <ul className="list">
+        <MoviesList>
           {movies?.map((movie) => (
             <li key={movie.imdbID}>
               <img src={movie.Poster} alt={`${movie.Title} poster`} />
@@ -24,7 +25,7 @@ export default function FindMovies({ movies }) {
               </div>
             </li>
           ))}
-        </ul>
+        </MoviesList>
       )}
     </div>
   );

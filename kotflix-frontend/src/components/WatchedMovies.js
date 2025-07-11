@@ -1,4 +1,5 @@
 import { useState } from "react";
+import MoviesList from "./MoviesList";
 
 export default function WatchedMovies({ tempWatchedData }) {
   const [isOpen2, setIsOpen2] = useState(true);
@@ -42,8 +43,7 @@ export default function WatchedMovies({ tempWatchedData }) {
               </p>
             </div>
           </div>
-
-          <ul className="list">
+          <MoviesList>
             {watched.map((movie) => (
               <li key={movie.imdbID}>
                 <img src={movie.Poster} alt={`${movie.Title} poster`} />
@@ -64,7 +64,7 @@ export default function WatchedMovies({ tempWatchedData }) {
                 </div>
               </li>
             ))}
-          </ul>
+          </MoviesList>
         </>
       )}
     </div>
