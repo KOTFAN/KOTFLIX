@@ -5,8 +5,9 @@ import Main from "./Main";
 import Logo from "./Logo";
 import Search from "./Search";
 import NumOfResults from "./NumOfResults";
-import WatchedMovies from "./WatchedMovies";
-import FoundMovies from "./FoundMovies";
+import MoviesBox from "./MoviesBox";
+import MoviesList from "./MoviesList";
+import Summary from "./Summary";
 
 const tempMovieData = [
   {
@@ -57,6 +58,7 @@ const tempWatchedData = [
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
 
   return (
     <>
@@ -66,9 +68,14 @@ export default function App() {
         <NumOfResults movies={movies} />
       </NavBar>
       <Main>
-        <FoundMovies movies={movies} />
+        <MoviesBox>
+          <MoviesList movies={movies} moviesType={"FOUND"} />
+        </MoviesBox>
 
-        <WatchedMovies tempWatchedData={tempWatchedData} />
+        <MoviesBox>
+          <Summary watched={watched} />
+          <MoviesList movies={watched} moviesType={"WATCHED"} />
+        </MoviesBox>
       </Main>
     </>
   );
