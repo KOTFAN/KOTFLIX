@@ -1,6 +1,5 @@
 import { useState } from "react";
 import MoviesList from "./MoviesList";
-import Movie from "./Movie";
 import ShowHideButton from "./ShowHideButton";
 import Summary from "./Summary";
 
