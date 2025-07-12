@@ -5,6 +5,8 @@ import Main from "./Main";
 import Logo from "./Logo";
 import Search from "./Search";
 import NumOfResults from "./NumOfResults";
+import WatchedMovies from "./WatchedMovies";
+import FoundMovies from "./FoundMovies";
 
 const tempMovieData = [
   {
@@ -63,7 +65,11 @@ export default function App() {
         <Search />
         <NumOfResults movies={movies} />
       </NavBar>
-      <Main tempWatchedData={tempWatchedData} movies={movies} />
+      <Main>
+        <FoundMovies movies={movies} />
+
+        <WatchedMovies tempWatchedData={tempWatchedData} />
+      </Main>
     </>
   );
 }
