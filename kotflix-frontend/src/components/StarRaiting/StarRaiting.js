@@ -4,6 +4,7 @@ import Star from "./Star";
 
 function StarRaiting({ maxStars = 5 }) {
   const [raiting, setRaiting] = useState(0);
+  const [tempRaiting, setTempRaiting] = useState(0);
 
   function handleRate(newRaiting) {
     setRaiting(newRaiting);
@@ -14,12 +15,18 @@ function StarRaiting({ maxStars = 5 }) {
         {Array.from({ length: maxStars }).map((e, i) => (
           <Star
             key={i}
-            isFull={i + 1 <= raiting}
+            isFull={tempRaiting === 0 ? i + 1 <= raiting : i + 1 <= tempRaiting}
             onRate={() => handleRate(i + 1)}
+            onHoverIn={() => {
+              setTempRaiting(i + 1);
+            }}
+            onHoverOut={() => {
+              setTempRaiting(0);
+            }}
           />
         ))}
       </div>
-      <p className="starCount"> {raiting || ""}</p>
+      <p className="starCount"> {tempRaiting || raiting || ""}</p>
     </div>
   );
 }
