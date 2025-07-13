@@ -2,6 +2,16 @@ import { useState } from "react";
 import "./StarRating.css";
 import Star from "./Star";
 
+// import PropTypes from "prop-types";
+
+// StarRating.propTypes = {
+//   maxStars: PropTypes.number,
+//   size: PropTypes.number,
+//   color: PropTypes.string,
+//   defaultStarsCount: PropTypes.number,
+//   setExternalRating: PropTypes.func,
+//   messages: PropTypes.arrayOf(PropTypes.string),
+// };
 function StarRating({
   maxStars = 5,
   size = 40,
@@ -19,6 +29,7 @@ function StarRating({
     setRaiting(newRaiting);
     setExternalRating(newRaiting);
   }
+
   return (
     <div className="container">
       <div className="starsContainer">

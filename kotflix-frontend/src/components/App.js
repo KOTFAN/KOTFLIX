@@ -98,7 +98,7 @@ export default function App() {
             messages={["disgusting", "bad", "mean", "good", "masterpiece"]}
           />
           <StarRating
-            maxStars={10}
+            maxStars={"10"}
             size={20}
             color={"red"}
             defaultStarsCount={10}
