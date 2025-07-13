@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.starsContainer {
+  display: flex;
+  gap: 4px;
+}
+
+.starCount {
+  margin: 0;
+  line-height: 1;
+}

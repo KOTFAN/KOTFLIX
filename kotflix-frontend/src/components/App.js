@@ -8,6 +8,7 @@ import NumOfResults from "./NumOfResults";
 import MoviesBox from "./MoviesBox";
 import MoviesList from "./MoviesList";
 import Summary from "./Summary";
+import StarRaiting from "./StarRaiting/StarRaiting";
 
 const tempMovieData = [
   {
@@ -75,6 +76,7 @@ export default function App() {
         <MoviesBox>
           <Summary watched={watched} />
           <MoviesList movies={watched} moviesType={"WATCHED"} />
+          {/* <StarRaiting /> */}
         </MoviesBox>
       </Main>
     </>
