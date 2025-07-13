@@ -74,9 +74,9 @@ export default function App() {
         </MoviesBox>
 
         <MoviesBox>
-          <Summary watched={watched} />
-          <MoviesList movies={watched} moviesType={"WATCHED"} />
-          {/* <StarRaiting /> */}
+          {/* <Summary watched={watched} />
+          <MoviesList movies={watched} moviesType={"WATCHED"} /> */}
+          <StarRaiting maxStars={5} />
         </MoviesBox>
       </Main>
     </>
