@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import NavBar from "./NavBar";
 import Main from "./Main";
@@ -8,7 +8,6 @@ import NumOfResults from "./NumOfResults";
 import MoviesBox from "./MoviesBox";
 import MoviesList from "./MoviesList";
 import Summary from "./Summary";
-import StarRating from "./StarRating/StarRating";
 
 const tempMovieData = [
   {
@@ -56,26 +55,19 @@ const tempWatchedData = [
     userRating: 9,
   },
 ];
+const APIKEY = process.env.REACT_APP_OMDB_API_KEY;
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
 
-  function Test() {
-    const [movieStars, setMovieStars] = useState(0);
-    return (
-      <div>
-        <StarRating
-          maxStars={10}
-          size={20}
-          color={"red"}
-          defaultStarsCount={movieStars}
-          setExternalRating={setMovieStars}
-        />
-        <p>The movie get {movieStars} stars</p>
-      </div>
-    );
-  }
+  useEffect(function () {
+    fetch(`http://www.omdbapi.com/?apikey=${APIKEY}&s=overlord`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => setMovies(data.Search));
+  }, []);
 
   return (
     <>
@@ -90,20 +82,8 @@ export default function App() {
         </MoviesBox>
 
         <MoviesBox>
-          {/* <Summary watched={watched} />
-          <MoviesList movies={watched} moviesType={"WATCHED"} /> */}
-          <StarRating
-            maxStars={5}
-            size={30}
-            messages={["disgusting", "bad", "mean", "good", "masterpiece"]}
-          />
-          <StarRating
-            maxStars={"10"}
-            size={20}
-            color={"red"}
-            defaultStarsCount={10}
-          />
-          <Test />
+          <Summary watched={watched} />
+          <MoviesList movies={watched} moviesType={"WATCHED"} />
         </MoviesBox>
       </Main>
     </>
