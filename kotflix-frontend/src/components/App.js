@@ -12,46 +12,54 @@ import Preloader from "./Preloader";
 import ErrorMessage from "./ErrorMessage";
 
 const APIKEY = process.env.REACT_APP_OMDB_API_KEY;
-const seachQuery = "Squid game";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [query, setQuery] = useState("");
+  useEffect(
+    function () {
+      async function getMovies(searchQuery) {
+        try {
+          setIsLoading(true);
+          setErrorMessage("");
 
-  useEffect(function () {
-    async function getMovies(query) {
-      try {
-        setIsLoading(true);
+          const res = await fetch(
+            `http://www.omdbapi.com/?apikey=${APIKEY}&s=${searchQuery}`
+          );
 
-        const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${APIKEY}&s=${query}`
-        );
+          if (!res.ok) throw new Error("Failed to load movies data");
 
-        if (!res.ok) throw new Error("Failed to load movies data");
+          const data = await res.json();
 
-        const data = await res.json();
+          if (data.Response === "False") {
+            throw new Error("Movies not found");
+          }
 
-        if (data.Response === "False") {
-          throw new Error("Movies not found");
+          setMovies(data.Search);
+        } catch (error) {
+          setErrorMessage(error.message);
+        } finally {
+          setIsLoading(false);
         }
-
-        setMovies(data.Search);
-      } catch (error) {
-        setErrorMessage(error.message);
-      } finally {
-        setIsLoading(false);
       }
-    }
-    getMovies(seachQuery);
-  }, []);
+
+      if (query.length < 3) {
+        setMovies([]);
+        return;
+      }
+      getMovies(query);
+    },
+    [query]
+  );
 
   return (
     <>
       <NavBar>
         <Logo />
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumOfResults movies={movies} />
       </NavBar>
       <Main>
