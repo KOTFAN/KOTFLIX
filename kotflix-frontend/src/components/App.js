@@ -10,6 +10,7 @@ import MoviesList from "./MoviesList";
 import Summary from "./Summary";
 import Preloader from "./Preloader";
 import ErrorMessage from "./ErrorMessage";
+import SelectedMovie from "./SelectedMovie";
 
 const APIKEY = process.env.REACT_APP_OMDB_API_KEY;
 
@@ -19,6 +20,8 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [query, setQuery] = useState("");
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
+
   useEffect(
     function () {
       async function getMovies(searchQuery) {
@@ -65,15 +68,25 @@ export default function App() {
       <Main>
         <MoviesBox>
           {!errorMessage && !isLoading && (
-            <MoviesList movies={movies} moviesType={"FOUND"} />
+            <MoviesList
+              movies={movies}
+              moviesType={"FOUND"}
+              setSelectedMovieId={setSelectedMovieId}
+            />
           )}
           {isLoading && <Preloader />}
           {errorMessage && <ErrorMessage message={errorMessage} />}
         </MoviesBox>
 
         <MoviesBox>
-          <Summary watched={watched} />
-          <MoviesList movies={watched} moviesType={"WATCHED"} />
+          {selectedMovieId ? (
+            <SelectedMovie movieId={selectedMovieId} />
+          ) : (
+            <>
+              <Summary watched={watched} />
+              <MoviesList movies={watched} moviesType={"WATCHED"} />
+            </>
+          )}
         </MoviesBox>
       </Main>
     </>

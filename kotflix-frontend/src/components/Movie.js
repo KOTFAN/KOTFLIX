@@ -1,7 +1,7 @@
-export default function Movie({ children, movie }) {
+export default function Movie({ children, movie, setSelectedMovieId }) {
   //children - aditional info for movie
   return (
-    <li>
+    <li onClick={() => setSelectedMovieId(movie.imdbID)}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div> {children}</div>

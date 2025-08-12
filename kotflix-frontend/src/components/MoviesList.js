@@ -1,10 +1,19 @@
 import Movie from "./Movie";
 
-export default function MoviesList({ movies, moviesType }) {
+export default function MoviesList({
+  movies,
+  moviesType,
+  selectedMovieId,
+  setSelectedMovieId,
+}) {
   return (
     <ul className="list">
       {movies?.map((movie) => (
-        <Movie movie={movie} key={movie.imdbID}>
+        <Movie
+          movie={movie}
+          key={movie.imdbID}
+          setSelectedMovieId={setSelectedMovieId}
+        >
           {moviesType === "FOUND" && (
             <p>
               <span>🗓</span>
