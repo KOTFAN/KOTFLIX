@@ -22,6 +22,13 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [selectedMovieId, setSelectedMovieId] = useState(null);
 
+  function updateMovieIdHandler(id) {
+    setSelectedMovieId((currentId) => (currentId === id ? null : id));
+  }
+  function closeMovieInfoHandler() {
+    setSelectedMovieId(null);
+  }
+
   useEffect(
     function () {
       async function getMovies(searchQuery) {
@@ -71,7 +78,7 @@ export default function App() {
             <MoviesList
               movies={movies}
               moviesType={"FOUND"}
-              setSelectedMovieId={setSelectedMovieId}
+              updateMovieIdHandler={updateMovieIdHandler}
             />
           )}
           {isLoading && <Preloader />}
@@ -80,7 +87,10 @@ export default function App() {
 
         <MoviesBox>
           {selectedMovieId ? (
-            <SelectedMovie movieId={selectedMovieId} />
+            <SelectedMovie
+              movieId={selectedMovieId}
+              closeMovieInfoHandler={closeMovieInfoHandler}
+            />
           ) : (
             <>
               <Summary watched={watched} />

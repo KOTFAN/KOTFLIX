@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function SelectedMovie({ movieId }) {
+function SelectedMovie({ movieId, closeMovieInfoHandler }) {
   const [movieData, setMovieData] = useState(null);
 
   function getMovieDetailsHandler(id) {
@@ -20,9 +20,12 @@ function SelectedMovie({ movieId }) {
       {movieData ? (
         <div>
           <span>{movieData.Title}</span>
+          <button className="btn-back" onClick={closeMovieInfoHandler}>
+            &larr;
+          </button>
         </div>
       ) : (
-        <div>no movie</div>
+        <div>Loading...</div>
       )}
     </>
   );

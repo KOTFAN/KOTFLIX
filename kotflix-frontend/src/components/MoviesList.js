@@ -3,16 +3,15 @@ import Movie from "./Movie";
 export default function MoviesList({
   movies,
   moviesType,
-  selectedMovieId,
-  setSelectedMovieId,
+  updateMovieIdHandler,
 }) {
   return (
-    <ul className="list">
+    <ul className="list list-movie">
       {movies?.map((movie) => (
         <Movie
           movie={movie}
           key={movie.imdbID}
-          setSelectedMovieId={setSelectedMovieId}
+          updateMovieIdHandler={updateMovieIdHandler}
         >
           {moviesType === "FOUND" && (
             <p>
