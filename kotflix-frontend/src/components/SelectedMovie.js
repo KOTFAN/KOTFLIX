@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import StarRating from "./StarRating/StarRating";
 import Preloader from "./Preloader";
 
+import posterNotFound from "./../assets/images/mov-not-found.png";
+
 function SelectedMovie({
   movieId,
   closeMovieInfoHandler,
@@ -54,7 +56,12 @@ function SelectedMovie({
             <button className="btn-back" onClick={closeMovieInfoHandler}>
               ⬅
             </button>
-            <img src={movieData?.Poster} alt={"image of " + movieData.Title} />
+            <img
+              src={
+                movieData.Poster === "N/A" ? posterNotFound : movieData.Poster
+              }
+              alt={"image of " + movieData.Title}
+            />
             <div className="details-overview">
               <h3>{movieData.Title}</h3>
               <p>

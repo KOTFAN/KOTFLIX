@@ -1,3 +1,5 @@
+import posterNotFound from "./../assets/images/mov-not-found.png";
+
 export default function Movie({
   movie,
   selectMovieHandler,
@@ -13,7 +15,7 @@ export default function Movie({
       }}
     >
       <img
-        src={movie.poster}
+        src={movie.poster === "N/A" ? posterNotFound : movie.poster}
         alt={`${movie.title} poster`}
         onClick={() => {
           if (movieType === "WATCHED") {
