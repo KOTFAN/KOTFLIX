@@ -33,19 +33,10 @@ export default function App() {
 
   function addToWatchedHandler(movie) {
     setWatched((currentWatched) => {
-      const alreadyWatchedIndex = currentWatched.findIndex(
-        (item) => item.imdbID === movie.imdbID
-      ); //-1 of 0 1 2 ...
-
-      if (alreadyWatchedIndex !== -1) {
-        return currentWatched.map((item, index) =>
-          index === alreadyWatchedIndex
-            ? { ...item, userRating: movie.userRating }
-            : item
-        );
-      }
-
-      return [...currentWatched, movie];
+      return [
+        ...currentWatched.filter((item) => item.imdbID !== movie.imdbID),
+        { ...movie, userRating: movie.userRating },
+      ];
     });
   }
 
