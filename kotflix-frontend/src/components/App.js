@@ -50,6 +50,10 @@ export default function App() {
     });
   }
 
+  function deleteWatchedMovieHandler(movieId) {
+    setWatched((c) => c.filter((item) => item.imdbID !== movieId));
+  }
+
   useEffect(
     function () {
       async function getMovies(searchQuery) {
@@ -132,6 +136,7 @@ export default function App() {
                 movies={watched}
                 moviesType={"WATCHED"}
                 selectMovieHandler={selectMovieHandler}
+                deleteWatchedMovieHandler={deleteWatchedMovieHandler}
               />
             </>
           )}

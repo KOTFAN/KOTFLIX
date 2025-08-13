@@ -1,11 +1,26 @@
-export default function Movie({ movie, selectMovieHandler, movieType }) {
+export default function Movie({
+  movie,
+  selectMovieHandler,
+  movieType,
+  deleteWatchedMovieHandler,
+}) {
   return (
     <li
       onClick={() => {
-        selectMovieHandler(movie.imdbID);
+        if (movieType === "FOUND") {
+          selectMovieHandler(movie.imdbID);
+        }
       }}
     >
-      <img src={movie.poster} alt={`${movie.title} poster`} />
+      <img
+        src={movie.poster}
+        alt={`${movie.title} poster`}
+        onClick={() => {
+          if (movieType === "WATCHED") {
+            selectMovieHandler(movie.imdbID);
+          }
+        }}
+      />
       <h3>{movie.title}</h3>
       <div>
         {movieType === "FOUND" && (
@@ -27,6 +42,14 @@ export default function Movie({ movie, selectMovieHandler, movieType }) {
             <p>
               <span>⏳</span>
               <span>{movie.runtime} min</span>
+            </p>
+            <p>
+              <button
+                className="btn-delete"
+                onClick={() => deleteWatchedMovieHandler(movie.imdbID)}
+              >
+                X
+              </button>
             </p>
           </>
         )}
