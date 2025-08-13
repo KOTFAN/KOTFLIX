@@ -34,8 +34,8 @@ export default function App() {
   function addToWatchedHandler(movie) {
     setWatched((currentWatched) => {
       return [
-        ...currentWatched.filter((item) => item.imdbID !== movie.imdbID),
         { ...movie, userRating: movie.userRating },
+        ...currentWatched.filter((item) => item.imdbID !== movie.imdbID),
       ];
     });
   }
