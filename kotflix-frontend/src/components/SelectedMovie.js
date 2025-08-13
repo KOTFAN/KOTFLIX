@@ -15,8 +15,8 @@ function SelectedMovie({
   function addMovieHandler() {
     const watchedMovie = {
       title: movieData.Title,
-      runtime: Number(movieData.Runtime.split(" ").at(0)),
-      imdbRating: Number(movieData.imdbRating),
+      runtime: Number(movieData.Runtime.split(" ").at(0)) || 0,
+      imdbRating: Number(movieData.imdbRating) || 0,
       imdbID: movieData.imdbID,
       poster: movieData.Poster,
       userRating: userRating,

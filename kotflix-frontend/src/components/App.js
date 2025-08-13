@@ -32,7 +32,6 @@ export default function App() {
   }
 
   function addToWatchedHandler(movie) {
-    console.log(movie);
     setWatched((currentWatched) => {
       const alreadyWatchedIndex = currentWatched.findIndex(
         (item) => item.imdbID === movie.imdbID
