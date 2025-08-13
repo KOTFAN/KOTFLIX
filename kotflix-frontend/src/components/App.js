@@ -29,6 +29,20 @@ export default function App() {
     setSelectedMovieId(null);
   }
 
+  function addToWatchedHandler(movie) {
+    setWatched((currentWatched) => {
+      const isAlreadyWatched = currentWatched.some(
+        (item) => item.imdbID === movie.imdbID
+      );
+
+      if (isAlreadyWatched) {
+        return currentWatched;
+      }
+
+      return [...currentWatched, movie];
+    });
+  }
+
   useEffect(
     function () {
       async function getMovies(searchQuery) {
@@ -48,7 +62,18 @@ export default function App() {
             throw new Error("Movies not found");
           }
 
-          setMovies(data.Search);
+          setMovies(
+            data.Search.map((movie) => {
+              return {
+                ...movie,
+                title: movie.Title,
+                runtime: movie.Runtime,
+                imdbRating: movie.imdbRating,
+                imdbID: movie.imdbID,
+                poster: movie.Poster,
+              };
+            })
+          );
         } catch (error) {
           setErrorMessage(error.message);
         } finally {
@@ -90,11 +115,16 @@ export default function App() {
             <SelectedMovie
               movieId={selectedMovieId}
               closeMovieInfoHandler={closeMovieInfoHandler}
+              addToWatchedHandler={addToWatchedHandler}
             />
           ) : (
             <>
               <Summary watched={watched} />
-              <MoviesList movies={watched} moviesType={"WATCHED"} />
+              <MoviesList
+                movies={watched}
+                moviesType={"WATCHED"}
+                updateMovieIdHandler={updateMovieIdHandler}
+              />
             </>
           )}
         </MoviesBox>

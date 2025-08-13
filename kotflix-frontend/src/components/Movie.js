@@ -1,10 +1,32 @@
-export default function Movie({ children, movie, updateMovieIdHandler }) {
-  //children - aditional info for movie
+export default function Movie({ movie, updateMovieIdHandler, movieType }) {
   return (
     <li onClick={() => updateMovieIdHandler(movie.imdbID)}>
-      <img src={movie.Poster} alt={`${movie.Title} poster`} />
-      <h3>{movie.Title}</h3>
-      <div> {children}</div>
+      <img src={movie.poster} alt={`${movie.title} poster`} />
+      <h3>{movie.title}</h3>
+      <div>
+        {movieType === "FOUND" && (
+          <p>
+            <span>🗓</span>
+            <span>{movie.Year}</span>
+          </p>
+        )}
+        {movieType === "WATCHED" && (
+          <>
+            <p>
+              <span>⭐️</span>
+              <span>{movie.imdbRating}</span>
+            </p>
+            <p>
+              <span>🌟</span>
+              <span>{movie.userRating}</span>
+            </p>
+            <p>
+              <span>⏳</span>
+              <span>{movie.runtime} min</span>
+            </p>
+          </>
+        )}
+      </div>
     </li>
   );
 }

@@ -2,9 +2,27 @@ import { useEffect, useState } from "react";
 import StarRating from "./StarRating/StarRating";
 import Preloader from "./Preloader";
 
-function SelectedMovie({ movieId, closeMovieInfoHandler }) {
+function SelectedMovie({
+  movieId,
+  closeMovieInfoHandler,
+  addToWatchedHandler,
+}) {
   const [movieData, setMovieData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  function addMovieHandler() {
+    const movie = {
+      title: movieData.Title,
+      runtime: Number(movieData.Runtime.split(" ").at(0)),
+      imdbRating: Number(movieData.imdbRating),
+      imdbID: movieData.imdbID,
+      poster: movieData.Poster,
+      userRating: 0,
+    };
+
+    addToWatchedHandler(movie);
+    closeMovieInfoHandler();
+  }
 
   function getMovieDetailsHandler(id) {
     const APIKEY = process.env.REACT_APP_OMDB_API_KEY;
@@ -31,7 +49,6 @@ function SelectedMovie({ movieId, closeMovieInfoHandler }) {
       ) : (
         <div className="details">
           <header>
-            {console.log(movieData)}
             <button className="btn-back" onClick={closeMovieInfoHandler}>
               ⬅
             </button>
@@ -48,7 +65,13 @@ function SelectedMovie({ movieId, closeMovieInfoHandler }) {
             </div>
           </header>
           <section>
-            <StarRating key={movieId} maxStars={10} size={25} />
+            <div className="rating">
+              <StarRating key={movieId} maxStars={10} size={25} />
+              <button className="btn-add" onClick={addMovieHandler}>
+                + Add to watched list
+              </button>
+            </div>
+
             <p>
               <em>{movieData.Plot}</em>
             </p>
