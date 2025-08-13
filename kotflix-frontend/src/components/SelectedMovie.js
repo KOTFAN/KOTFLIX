@@ -81,7 +81,7 @@ function SelectedMovie({
 
               {userRating > 0 && (
                 <button className="btn-add" onClick={addMovieHandler}>
-                  {ratedMovie ? "Change rating " : "+ Add to watched list"}
+                  {ratedMovie ? "Change rating ✨" : "+ Add to watched list"}
                 </button>
               )}
             </div>
