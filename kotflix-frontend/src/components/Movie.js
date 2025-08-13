@@ -1,6 +1,10 @@
-export default function Movie({ movie, updateMovieIdHandler, movieType }) {
+export default function Movie({ movie, selectMovieHandler, movieType }) {
   return (
-    <li onClick={() => updateMovieIdHandler(movie.imdbID)}>
+    <li
+      onClick={() => {
+        selectMovieHandler(movie.imdbID);
+      }}
+    >
       <img src={movie.poster} alt={`${movie.title} poster`} />
       <h3>{movie.title}</h3>
       <div>

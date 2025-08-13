@@ -6,21 +6,23 @@ function SelectedMovie({
   movieId,
   closeMovieInfoHandler,
   addToWatchedHandler,
+  ratedMovie,
 }) {
   const [movieData, setMovieData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [userRating, setUserRating] = useState(0);
 
   function addMovieHandler() {
-    const movie = {
+    const watchedMovie = {
       title: movieData.Title,
       runtime: Number(movieData.Runtime.split(" ").at(0)),
       imdbRating: Number(movieData.imdbRating),
       imdbID: movieData.imdbID,
       poster: movieData.Poster,
-      userRating: 0,
+      userRating: userRating,
     };
 
-    addToWatchedHandler(movie);
+    addToWatchedHandler(watchedMovie);
     closeMovieInfoHandler();
   }
 
@@ -66,10 +68,22 @@ function SelectedMovie({
           </header>
           <section>
             <div className="rating">
-              <StarRating key={movieId} maxStars={10} size={25} />
-              <button className="btn-add" onClick={addMovieHandler}>
-                + Add to watched list
-              </button>
+              <StarRating
+                key={movieId}
+                maxStars={10}
+                size={25}
+                setExternalRating={setUserRating}
+              />
+
+              {ratedMovie && (
+                <p>U already rated this movie {ratedMovie.userRating}</p>
+              )}
+
+              {userRating > 0 && (
+                <button className="btn-add" onClick={addMovieHandler}>
+                  {ratedMovie ? "Change rating " : "+ Add to watched list"}
+                </button>
+              )}
             </div>
 
             <p>

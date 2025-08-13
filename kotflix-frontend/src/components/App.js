@@ -21,9 +21,11 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [query, setQuery] = useState("");
   const [selectedMovieId, setSelectedMovieId] = useState(null);
+  const [ratedMovie, setRatedMovie] = useState(null);
 
-  function updateMovieIdHandler(id) {
+  function selectMovieHandler(id) {
     setSelectedMovieId((currentId) => (currentId === id ? null : id));
+    setRatedMovie(watched.find((movie) => movie.imdbID === id) || null);
   }
   function closeMovieInfoHandler() {
     setSelectedMovieId(null);
@@ -103,7 +105,7 @@ export default function App() {
             <MoviesList
               movies={movies}
               moviesType={"FOUND"}
-              updateMovieIdHandler={updateMovieIdHandler}
+              selectMovieHandler={selectMovieHandler}
             />
           )}
           {isLoading && <Preloader />}
@@ -116,6 +118,7 @@ export default function App() {
               movieId={selectedMovieId}
               closeMovieInfoHandler={closeMovieInfoHandler}
               addToWatchedHandler={addToWatchedHandler}
+              ratedMovie={ratedMovie}
             />
           ) : (
             <>
@@ -123,7 +126,7 @@ export default function App() {
               <MoviesList
                 movies={watched}
                 moviesType={"WATCHED"}
-                updateMovieIdHandler={updateMovieIdHandler}
+                selectMovieHandler={selectMovieHandler}
               />
             </>
           )}

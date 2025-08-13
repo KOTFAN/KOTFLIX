@@ -1,17 +1,13 @@
 import Movie from "./Movie";
 
-export default function MoviesList({
-  movies,
-  moviesType,
-  updateMovieIdHandler,
-}) {
+export default function MoviesList({ movies, moviesType, selectMovieHandler }) {
   return (
     <ul className="list list-movie">
       {movies?.map((movie) => (
         <Movie
           movie={movie}
           key={movie.imdbID}
-          updateMovieIdHandler={updateMovieIdHandler}
+          selectMovieHandler={selectMovieHandler}
           movieType={moviesType}
         />
       ))}
