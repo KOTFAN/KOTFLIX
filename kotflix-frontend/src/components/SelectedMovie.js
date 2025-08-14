@@ -16,11 +16,11 @@ function SelectedMovie({
 
   function addMovieHandler() {
     const watchedMovie = {
-      title: movieData.Title,
-      runtime: Number(movieData.Runtime.split(" ").at(0)) || 0,
+      title: movieData.title,
+      runtime: Number(movieData.runtime.split(" ").at(0)) || 0,
       imdbRating: Number(movieData.imdbRating) || 0,
       imdbID: movieData.imdbID,
-      poster: movieData.Poster,
+      poster: movieData.poster,
       userRating: userRating,
     };
 
@@ -34,7 +34,20 @@ function SelectedMovie({
     fetch(`http://www.omdbapi.com/?apikey=${APIKEY}&i=${id}`)
       .then((data) => data.json())
       .then((movieInfo) => {
-        setMovieData(movieInfo);
+        setMovieData({
+          actors: movieInfo.Actors,
+          country: movieInfo.Country,
+          genre: movieInfo.Genre,
+          language: movieInfo.Language,
+          plot: movieInfo.Plot,
+          poster: movieInfo.Poster,
+          runtime: movieInfo.Runtime,
+          title: movieInfo.Title,
+          imdbID: movieInfo.imdbID,
+          imdbRating: movieInfo.imdbRating,
+          released: movieInfo.Released,
+          director: movieInfo.Director,
+        });
       })
       .catch((err) => {
         console.log("my err🔥", err);
@@ -46,6 +59,7 @@ function SelectedMovie({
   useEffect(() => {
     getMovieDetailsHandler(movieId);
   }, [movieId]);
+
   return (
     <>
       {!movieData || isLoading ? ( //will fix in future)
@@ -58,16 +72,16 @@ function SelectedMovie({
             </button>
             <img
               src={
-                movieData.Poster === "N/A" ? posterNotFound : movieData.Poster
+                movieData.poster === "N/A" ? posterNotFound : movieData.poster
               }
-              alt={"image of " + movieData.Title}
+              alt={"image of " + movieData.title}
             />
             <div className="details-overview">
-              <h3>{movieData.Title}</h3>
+              <h3>{movieData.title}</h3>
               <p>
-                {movieData.Released} &bull; {movieData.Runtime}
+                {movieData.released} &bull; {movieData.runtime}
               </p>
-              <p> {movieData.Genre}</p>
+              <p> {movieData.genre}</p>
               <p>
                 <span>⭐{movieData.imdbRating} IMDB Rating</span>
               </p>
@@ -83,7 +97,10 @@ function SelectedMovie({
               />
 
               {ratedMovie && (
-                <p>U already rated this movie {ratedMovie.userRating}</p>
+                <p>
+                  You already rated this movie {ratedMovie.userRating}{" "}
+                  <span>🌟</span>
+                </p>
               )}
 
               {userRating > 0 && (
@@ -94,10 +111,10 @@ function SelectedMovie({
             </div>
 
             <p>
-              <em>{movieData.Plot}</em>
+              <em>{movieData.plot}</em>
             </p>
-            <p>Actors {movieData.Actors}</p>
-            <p>Directed by {movieData.Director}</p>
+            <p>Actors {movieData.actors}</p>
+            <p>Directed by {movieData.director}</p>
           </section>
         </div>
       )}
