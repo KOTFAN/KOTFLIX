@@ -7,11 +7,12 @@ export default function Search({ searchMoviesHandler }) {
   useEffect(() => {
     function keyPressHandler(e) {
       if (
-        e.code === "Enter" ||
+        e.code === "Enter" &&
         document.activeElement !== inputElement.current
       ) {
         inputElement.current.focus();
         setQuery("");
+        searchMoviesHandler("");
       }
     }
     document.addEventListener("keydown", keyPressHandler);
@@ -20,7 +21,7 @@ export default function Search({ searchMoviesHandler }) {
     return () => {
       document.removeEventListener("keydown", keyPressHandler);
     };
-  }, []);
+  }, [searchMoviesHandler]);
   return (
     <input
       className="search"
