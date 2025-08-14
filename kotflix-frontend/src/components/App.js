@@ -19,7 +19,6 @@ export default function App() {
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [query, setQuery] = useState("");
   const [selectedMovieId, setSelectedMovieId] = useState(null);
   const [ratedMovie, setRatedMovie] = useState(null);
 
@@ -44,69 +43,65 @@ export default function App() {
     setWatched((c) => c.filter((item) => item.imdbID !== movieId));
   }
 
-  useEffect(
-    function () {
-      const controller = new AbortController();
-      async function getMovies(searchQuery) {
-        try {
-          setIsLoading(true);
-          setErrorMessage("");
+  function searchMoviesHandler(searchQuery) {
+    const controller = new AbortController();
+    async function getMovies(searchQuery) {
+      try {
+        setIsLoading(true);
+        setErrorMessage("");
 
-          const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${APIKEY}&s=${searchQuery}`,
-            { signal: controller.signal }
-          );
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${APIKEY}&s=${searchQuery}`,
+          { signal: controller.signal }
+        );
 
-          if (!res.ok) throw new Error("Failed to load movies data");
+        if (!res.ok) throw new Error("Failed to load movies data");
 
-          const data = await res.json();
+        const data = await res.json();
 
-          if (data.Response === "False") {
-            throw new Error("Movies not found");
-          }
-
-          setMovies(
-            data.Search.map((movie) => {
-              return {
-                ...movie,
-                title: movie.Title,
-                runtime: movie.Runtime,
-                imdbRating: movie.imdbRating,
-                imdbID: movie.imdbID,
-                poster: movie.Poster,
-              };
-            })
-          );
-
-          setErrorMessage("");
-        } catch (error) {
-          if (error.name !== "AbortError") {
-            setErrorMessage(error.message);
-          }
-        } finally {
-          setIsLoading(false);
+        if (data.Response === "False") {
+          throw new Error("Movies not found");
         }
+
+        setMovies(
+          data.Search.map((movie) => {
+            return {
+              ...movie,
+              title: movie.Title,
+              runtime: movie.Runtime,
+              imdbRating: movie.imdbRating,
+              imdbID: movie.imdbID,
+              poster: movie.Poster,
+            };
+          })
+        );
+
+        setErrorMessage("");
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          setErrorMessage(error.message);
+        }
+      } finally {
+        setIsLoading(false);
       }
+    }
 
-      if (query.length < 3) {
-        setMovies([]);
-        return;
-      }
-      getMovies(query);
+    if (searchQuery.length < 3) {
+      setMovies([]);
+      return;
+    }
+    getMovies(searchQuery);
 
-      return () => {
-        controller.abort();
-      };
-    },
-
-    [query]
-  );
+    return () => {
+      controller.abort();
+    };
+  }
 
   return (
     <>
       <NavBar>
         <Logo />
-        <Search query={query} setQuery={setQuery} />
+        <Search searchMoviesHandler={searchMoviesHandler} />
         <NumOfResults movies={movies} />
       </NavBar>
       <Main>
