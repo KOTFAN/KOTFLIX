@@ -22,7 +22,6 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [selectedMovieId, setSelectedMovieId] = useState(null);
   const [ratedMovie, setRatedMovie] = useState(null);
-  console.log(errorMessage);
 
   function selectMovieHandler(id) {
     setSelectedMovieId((currentId) => (currentId === id ? null : id));
@@ -82,7 +81,7 @@ export default function App() {
           setErrorMessage("");
         } catch (error) {
           if (error.name !== "AbortError") {
-            setErrorMessage(error);
+            setErrorMessage(error.message);
           }
         } finally {
           setIsLoading(false);
@@ -120,7 +119,7 @@ export default function App() {
             />
           )}
           {isLoading && <Preloader />}
-          {errorMessage && <ErrorMessage message={errorMessage.message} />}
+          {errorMessage && <ErrorMessage message={errorMessage} />}
         </MoviesBox>
 
         <MoviesBox>
