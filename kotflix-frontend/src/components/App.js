@@ -22,6 +22,7 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [selectedMovieId, setSelectedMovieId] = useState(null);
   const [ratedMovie, setRatedMovie] = useState(null);
+  console.log(errorMessage);
 
   function selectMovieHandler(id) {
     setSelectedMovieId((currentId) => (currentId === id ? null : id));
@@ -46,13 +47,15 @@ export default function App() {
 
   useEffect(
     function () {
+      const controller = new AbortController();
       async function getMovies(searchQuery) {
         try {
           setIsLoading(true);
           setErrorMessage("");
 
           const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${APIKEY}&s=${searchQuery}`
+            `http://www.omdbapi.com/?apikey=${APIKEY}&s=${searchQuery}`,
+            { signal: controller.signal }
           );
 
           if (!res.ok) throw new Error("Failed to load movies data");
@@ -75,8 +78,12 @@ export default function App() {
               };
             })
           );
+
+          setErrorMessage("");
         } catch (error) {
-          setErrorMessage(error.message);
+          if (error.name !== "AbortError") {
+            setErrorMessage(error);
+          }
         } finally {
           setIsLoading(false);
         }
@@ -87,7 +94,12 @@ export default function App() {
         return;
       }
       getMovies(query);
+
+      return () => {
+        controller.abort();
+      };
     },
+
     [query]
   );
 
@@ -108,7 +120,7 @@ export default function App() {
             />
           )}
           {isLoading && <Preloader />}
-          {errorMessage && <ErrorMessage message={errorMessage} />}
+          {errorMessage && <ErrorMessage message={errorMessage.message} />}
         </MoviesBox>
 
         <MoviesBox>
