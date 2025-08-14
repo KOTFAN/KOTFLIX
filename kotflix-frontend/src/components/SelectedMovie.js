@@ -70,6 +70,18 @@ function SelectedMovie({
     };
   }, [movieData?.title]);
 
+  useEffect(() => {
+    function closeOnEscape(e) {
+      if (e.key === "Escape") {
+        closeMovieInfoHandler();
+      }
+    }
+    document.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  });
   return (
     <>
       {!movieData || isLoading ? ( //will fix in future)
