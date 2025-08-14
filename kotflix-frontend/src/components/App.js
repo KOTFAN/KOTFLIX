@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import NavBar from "./NavBar";
 import Main from "./Main";
@@ -16,7 +16,10 @@ const APIKEY = process.env.REACT_APP_OMDB_API_KEY;
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useState(() => {
+    const isStored = localStorage.getItem("watched");
+    return isStored ? JSON.parse(localStorage.getItem("watched")) : [];
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedMovieId, setSelectedMovieId] = useState(null);
@@ -32,10 +35,12 @@ export default function App() {
 
   function addToWatchedHandler(movie) {
     setWatched((currentWatched) => {
-      return [
+      const updatedWatched = [
         { ...movie, userRating: movie.userRating },
         ...currentWatched.filter((item) => item.imdbID !== movie.imdbID),
       ];
+
+      return updatedWatched;
     });
   }
 
@@ -96,6 +101,10 @@ export default function App() {
       controller.abort();
     };
   }
+
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify(watched));
+  }, [watched]);
 
   return (
     <>
