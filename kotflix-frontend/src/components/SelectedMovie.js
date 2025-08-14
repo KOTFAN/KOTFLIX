@@ -60,6 +60,16 @@ function SelectedMovie({
     getMovieDetailsHandler(movieId);
   }, [movieId]);
 
+  useEffect(() => {
+    if (movieData?.title) {
+      document.title = `KOTFLIX | ${movieData?.title}`;
+    }
+
+    return () => {
+      document.title = "KOTFLIX";
+    };
+  }, [movieData?.title]);
+
   return (
     <>
       {!movieData || isLoading ? ( //will fix in future)
