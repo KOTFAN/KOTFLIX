@@ -24,6 +24,7 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedMovieId, setSelectedMovieId] = useState(null);
   const [ratedMovie, setRatedMovie] = useState(null);
+  const controller = useRef(null);
 
   function selectMovieHandler(id) {
     setSelectedMovieId((currentId) => (currentId === id ? null : id));
@@ -49,7 +50,11 @@ export default function App() {
   }
 
   function searchMoviesHandler(searchQuery) {
-    const controller = new AbortController();
+    if (controller.current) {
+      controller.current.abort();
+    }
+
+    controller.current = new AbortController();
     async function getMovies(searchQuery) {
       try {
         setIsLoading(true);
@@ -57,7 +62,7 @@ export default function App() {
 
         const res = await fetch(
           `http://www.omdbapi.com/?apikey=${APIKEY}&s=${searchQuery}`,
-          { signal: controller.signal }
+          { signal: controller.current.signal }
         );
 
         if (!res.ok) throw new Error("Failed to load movies data");
@@ -96,10 +101,6 @@ export default function App() {
       return;
     }
     getMovies(searchQuery);
-
-    return () => {
-      controller.abort();
-    };
   }
 
   useEffect(() => {
