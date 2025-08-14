@@ -1,7 +1,26 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Search({ searchMoviesHandler }) {
   const [query, setQuery] = useState("");
+  const inputElement = useRef(null);
+
+  useEffect(() => {
+    function keyPressHandler(e) {
+      if (
+        e.code === "Enter" ||
+        document.activeElement !== inputElement.current
+      ) {
+        inputElement.current.focus();
+        setQuery("");
+      }
+    }
+    document.addEventListener("keydown", keyPressHandler);
+    inputElement.current.focus();
+
+    return () => {
+      document.removeEventListener("keydown", keyPressHandler);
+    };
+  }, []);
   return (
     <input
       className="search"
@@ -12,6 +31,7 @@ export default function Search({ searchMoviesHandler }) {
         setQuery(e.target.value);
         searchMoviesHandler(e.target.value);
       }}
+      ref={inputElement}
     />
   );
 }
