@@ -1,11 +1,6 @@
 import posterNotFound from "./../assets/images/mov-not-found.png";
 
-export default function Movie({
-  movie,
-  selectMovieHandler,
-  movieType,
-  deleteWatchedMovieHandler,
-}) {
+export default function Movie({ movie, selectMovieHandler, movieType, deleteWatchedMovieHandler }) {
   return (
     <li
       onClick={() => {
@@ -46,10 +41,7 @@ export default function Movie({
               <span>{movie.runtime} min</span>
             </p>
             <p>
-              <button
-                className="btn-delete"
-                onClick={() => deleteWatchedMovieHandler(movie.imdbID)}
-              >
+              <button className="btn-delete" onClick={() => deleteWatchedMovieHandler(movie.imdbID)}>
                 X
               </button>
             </p>

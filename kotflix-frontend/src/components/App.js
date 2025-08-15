@@ -16,15 +16,11 @@ import { useLocalStorageState } from "../hooks/useLocalStorageState";
 import { useSearchMovies } from "../hooks/useSearchMovies";
 
 export default function App() {
-  const { movies, isLoading, errorMessage, searchMoviesHandler } =
-    useSearchMovies();
+  const { movies, isLoading, errorMessage, searchMoviesHandler } = useSearchMovies();
 
   const [watched, setWatched] = useLocalStorageState("watched");
 
-  const [selectedMovieId, setSelectedMovieId] = useLocalStorageState(
-    "selectedMovieID",
-    null
-  );
+  const [selectedMovieId, setSelectedMovieId] = useLocalStorageState("selectedMovieID", null);
 
   const [ratedMovie, setRatedMovie] = useState(null);
 
@@ -61,11 +57,7 @@ export default function App() {
       <Main>
         <MoviesBox>
           {!errorMessage && !isLoading && (
-            <MoviesList
-              movies={movies}
-              moviesType={"FOUND"}
-              selectMovieHandler={selectMovieHandler}
-            />
+            <MoviesList movies={movies} moviesType={"FOUND"} selectMovieHandler={selectMovieHandler} />
           )}
           {isLoading && <Preloader />}
           {errorMessage && <ErrorMessage message={errorMessage} />}

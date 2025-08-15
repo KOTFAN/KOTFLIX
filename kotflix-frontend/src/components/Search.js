@@ -6,10 +6,7 @@ export default function Search({ searchMoviesHandler }) {
 
   useEffect(() => {
     function keyPressHandler(e) {
-      if (
-        e.code === "Enter" &&
-        document.activeElement !== inputElement.current
-      ) {
+      if (e.code === "Enter" && document.activeElement !== inputElement.current) {
         inputElement.current.focus();
         setQuery("");
         searchMoviesHandler("");

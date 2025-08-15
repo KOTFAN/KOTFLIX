@@ -18,10 +18,9 @@ export function useSearchMovies() {
         setIsLoading(true);
         setErrorMessage("");
 
-        const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${APIKEY}&s=${searchQuery}`,
-          { signal: controller.current.signal }
-        );
+        const res = await fetch(`http://www.omdbapi.com/?apikey=${APIKEY}&s=${searchQuery}`, {
+          signal: controller.current.signal,
+        });
 
         if (!res.ok) throw new Error("Failed to load movies data");
 
@@ -41,7 +40,7 @@ export function useSearchMovies() {
               imdbID: movie.imdbID,
               poster: movie.Poster,
             };
-          })
+          }),
         );
 
         setErrorMessage("");

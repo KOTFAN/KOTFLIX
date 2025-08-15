@@ -1,11 +1,6 @@
 import Movie from "./Movie";
 
-export default function MoviesList({
-  movies,
-  moviesType,
-  selectMovieHandler,
-  deleteWatchedMovieHandler,
-}) {
+export default function MoviesList({ movies, moviesType, selectMovieHandler, deleteWatchedMovieHandler }) {
   return (
     <ul className="list list-movie">
       {movies?.map((movie) => (

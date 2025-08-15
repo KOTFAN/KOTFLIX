@@ -20,9 +20,7 @@ function StarRating({
   setExternalRating = () => {},
   messages = [],
 }) {
-  const [raiting, setRaiting] = useState(
-    defaultStarsCount <= maxStars ? defaultStarsCount : 0
-  );
+  const [raiting, setRaiting] = useState(defaultStarsCount <= maxStars ? defaultStarsCount : 0);
   const [tempRaiting, setTempRaiting] = useState(0);
 
   function handleRate(newRaiting) {

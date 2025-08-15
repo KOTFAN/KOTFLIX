@@ -4,12 +4,7 @@ import Preloader from "./Preloader";
 
 import posterNotFound from "./../assets/images/mov-not-found.png";
 
-function SelectedMovie({
-  movieId,
-  closeMovieInfoHandler,
-  addToWatchedHandler,
-  ratedMovie,
-}) {
+function SelectedMovie({ movieId, closeMovieInfoHandler, addToWatchedHandler, ratedMovie }) {
   const [movieData, setMovieData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState(0);
@@ -93,9 +88,7 @@ function SelectedMovie({
               ⬅
             </button>
             <img
-              src={
-                movieData.poster === "N/A" ? posterNotFound : movieData.poster
-              }
+              src={movieData.poster === "N/A" ? posterNotFound : movieData.poster}
               alt={"image of " + movieData.title}
             />
             <div className="details-overview">
@@ -111,17 +104,11 @@ function SelectedMovie({
           </header>
           <section>
             <div className="rating">
-              <StarRating
-                key={movieId}
-                maxStars={10}
-                size={25}
-                setExternalRating={setUserRating}
-              />
+              <StarRating key={movieId} maxStars={10} size={25} setExternalRating={setUserRating} />
 
               {ratedMovie && (
                 <p>
-                  You already rated this movie {ratedMovie.userRating}{" "}
-                  <span>🌟</span>
+                  You already rated this movie {ratedMovie.userRating} <span>🌟</span>
                 </p>
               )}
 
