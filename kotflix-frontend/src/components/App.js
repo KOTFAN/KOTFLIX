@@ -11,11 +11,13 @@ import Summary from "./Summary";
 import Preloader from "./Preloader";
 import ErrorMessage from "./ErrorMessage";
 import SelectedMovie from "./SelectedMovie";
-import { useMovies } from "../hooks/useMovies";
+
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
+import { useSearchMovies } from "../hooks/useSearchMovies";
 
 export default function App() {
-  const { movies, isLoading, errorMessage, searchMoviesHandler } = useMovies();
+  const { movies, isLoading, errorMessage, searchMoviesHandler } =
+    useSearchMovies();
   const [watched, setWatched] = useLocalStorageState("watched");
   const [selectedMovieId, setSelectedMovieId] = useState(null);
   const [ratedMovie, setRatedMovie] = useState(null);

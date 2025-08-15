@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 
 const APIKEY = process.env.REACT_APP_OMDB_API_KEY;
-export function useMovies() {
+export function useSearchMovies() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
