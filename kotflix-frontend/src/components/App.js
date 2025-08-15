@@ -18,8 +18,14 @@ import { useSearchMovies } from "../hooks/useSearchMovies";
 export default function App() {
   const { movies, isLoading, errorMessage, searchMoviesHandler } =
     useSearchMovies();
+
   const [watched, setWatched] = useLocalStorageState("watched");
-  const [selectedMovieId, setSelectedMovieId] = useState(null);
+
+  const [selectedMovieId, setSelectedMovieId] = useLocalStorageState(
+    "selectedMovieID",
+    null
+  );
+
   const [ratedMovie, setRatedMovie] = useState(null);
 
   function selectMovieHandler(id) {
