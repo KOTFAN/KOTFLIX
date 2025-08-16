@@ -1,24 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useKey } from "../hooks/useKey";
 
 export default function Search({ searchMoviesHandler }) {
   const [query, setQuery] = useState("");
   const inputElement = useRef(null);
 
-  useEffect(() => {
-    function keyPressHandler(e) {
-      if (e.code === "Enter" && document.activeElement !== inputElement.current) {
-        inputElement.current.focus();
-        setQuery("");
-        searchMoviesHandler("");
-      }
+  useKey("Enter", function () {
+    if (document.activeElement !== inputElement.current) {
+      inputElement.current.focus();
+      setQuery("");
+      searchMoviesHandler("");
     }
-    document.addEventListener("keydown", keyPressHandler);
-    inputElement.current.focus();
+  });
 
-    return () => {
-      document.removeEventListener("keydown", keyPressHandler);
-    };
-  }, [searchMoviesHandler]);
   return (
     <input
       className="search"

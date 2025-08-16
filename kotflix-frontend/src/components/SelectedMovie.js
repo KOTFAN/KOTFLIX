@@ -3,6 +3,7 @@ import StarRating from "./StarRating/StarRating";
 import Preloader from "./Preloader";
 
 import posterNotFound from "./../assets/images/mov-not-found.png";
+import { useKey } from "../hooks/useKey";
 
 function SelectedMovie({ movieId, closeMovieInfoHandler, addToWatchedHandler, ratedMovie }) {
   const [movieData, setMovieData] = useState(null);
@@ -65,18 +66,7 @@ function SelectedMovie({ movieId, closeMovieInfoHandler, addToWatchedHandler, ra
     };
   }, [movieData?.title]);
 
-  useEffect(() => {
-    function closeOnEscape(e) {
-      if (e.key === "Escape") {
-        closeMovieInfoHandler();
-      }
-    }
-    document.addEventListener("keydown", closeOnEscape);
-
-    return () => {
-      document.removeEventListener("keydown", closeOnEscape);
-    };
-  });
+  useKey("Escape", closeMovieInfoHandler);
   return (
     <>
       {!movieData || isLoading ? ( //will fix in future)
